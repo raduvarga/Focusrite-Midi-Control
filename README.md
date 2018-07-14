@@ -1,6 +1,6 @@
-# Focusrite-Midi-Control
+# Focusrite Midi Control
 
-APP DOWNLOAD LINK: https://github.com/vargaradu/Focusrite-Midi-Control/raw/master/Focusrite%20Midi%20Control.zip
+APP DOWNLOAD LINK (Mac OSX): https://github.com/vargaradu/Focusrite-Midi-Control/raw/master/Focusrite%20Midi%20Control.zip
 
 On Chrome you might receive a "Focusrite Midi Control.zip is not commonly downloaded and may be dangerous" warning, you have to click "Keep" to continue the donwload.
 
