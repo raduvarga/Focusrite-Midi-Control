@@ -121,8 +121,8 @@
 				172ED9D020F27464000E7497 /* PreferencesViewController.swift */,
 			);
 			name = Views;
-			path = ../Views;
-			sourceTree = "<group>";
+			path = "Focusrite Midi Control/Views";
+			sourceTree = SOURCE_ROOT;
 		};
 		172ED9D620F29CC5000E7497 /* MIDI */ = {
 			isa = PBXGroup;
@@ -130,8 +130,8 @@
 				17E120A620F1680000700377 /* MidiListener.swift */,
 			);
 			name = MIDI;
-			path = ../MIDI;
-			sourceTree = "<group>";
+			path = "Focusrite Midi Control/MIDI";
+			sourceTree = SOURCE_ROOT;
 		};
 		172ED9D720F29CCE000E7497 /* TCP */ = {
 			isa = PBXGroup;
@@ -139,8 +139,8 @@
 				17E120A020F1140A00700377 /* TCPListener.swift */,
 			);
 			name = TCP;
-			path = ../TCP;
-			sourceTree = "<group>";
+			path = "Focusrite Midi Control/TCP";
+			sourceTree = SOURCE_ROOT;
 		};
 		172ED9DC20F2B0D5000E7497 /* Models */ = {
 			isa = PBXGroup;
@@ -149,8 +149,8 @@
 				17589B7E20FA89900072AEA9 /* Focusrite */,
 			);
 			name = Models;
-			path = ../Models;
-			sourceTree = "<group>";
+			path = "Focusrite Midi Control/Models";
+			sourceTree = SOURCE_ROOT;
 		};
 		17589B7E20FA89900072AEA9 /* Focusrite */ = {
 			isa = PBXGroup;
