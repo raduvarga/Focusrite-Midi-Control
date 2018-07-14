@@ -120,7 +120,8 @@
 				177908F720F0EF1500B7C702 /* ViewController.swift */,
 				172ED9D020F27464000E7497 /* PreferencesViewController.swift */,
 			);
-			path = Views;
+			name = Views;
+			path = ../Views;
 			sourceTree = "<group>";
 		};
 		172ED9D620F29CC5000E7497 /* MIDI */ = {
@@ -128,7 +129,8 @@
 			children = (
 				17E120A620F1680000700377 /* MidiListener.swift */,
 			);
-			path = MIDI;
+			name = MIDI;
+			path = ../MIDI;
 			sourceTree = "<group>";
 		};
 		172ED9D720F29CCE000E7497 /* TCP */ = {
@@ -136,7 +138,8 @@
 			children = (
 				17E120A020F1140A00700377 /* TCPListener.swift */,
 			);
-			path = TCP;
+			name = TCP;
+			path = ../TCP;
 			sourceTree = "<group>";
 		};
 		172ED9DC20F2B0D5000E7497 /* Models */ = {
@@ -145,7 +148,8 @@
 				17589B7F20FA89CF0072AEA9 /* MIDI */,
 				17589B7E20FA89900072AEA9 /* Focusrite */,
 			);
-			path = Models;
+			name = Models;
+			path = ../Models;
 			sourceTree = "<group>";
 		};
 		17589B7E20FA89900072AEA9 /* Focusrite */ = {
@@ -170,10 +174,6 @@
 		177908E920F0EF1500B7C702 = {
 			isa = PBXGroup;
 			children = (
-				172ED9DC20F2B0D5000E7497 /* Models */,
-				172ED9D720F29CCE000E7497 /* TCP */,
-				172ED9D620F29CC5000E7497 /* MIDI */,
-				172ED9D320F28D3E000E7497 /* Views */,
 				177908F420F0EF1500B7C702 /* Focusrite Midi Control */,
 				177908F320F0EF1500B7C702 /* Products */,
 				5CF844C6230477E864462276 /* Frameworks */,
@@ -194,6 +194,10 @@
 		177908F420F0EF1500B7C702 /* Focusrite Midi Control */ = {
 			isa = PBXGroup;
 			children = (
+				172ED9DC20F2B0D5000E7497 /* Models */,
+				172ED9D720F29CCE000E7497 /* TCP */,
+				172ED9D620F29CC5000E7497 /* MIDI */,
+				172ED9D320F28D3E000E7497 /* Views */,
 				177908F520F0EF1500B7C702 /* AppDelegate.swift */,
 				177908F920F0EF1700B7C702 /* Assets.xcassets */,
 				177908FB20F0EF1700B7C702 /* Main.storyboard */,
