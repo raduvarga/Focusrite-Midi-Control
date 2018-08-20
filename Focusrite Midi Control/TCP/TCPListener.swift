@@ -16,7 +16,7 @@ class TCPListener: TCPClient{
     
     let RECONNECT_TIME:UInt32 = 3
     let KEEP_ALIVE_TIME:UInt32 = 3
-    let SLEEP_TIME:UInt32 = 3
+    let SLEEP_TIME:UInt32 = 1
     
     // You can put whatever hostname and client-key you prefer.
     // But keep the same client-key, becasue if you change that, you will have to
@@ -29,9 +29,9 @@ class TCPListener: TCPClient{
     var approved:Bool?
     
     var readingWorkItem: DispatchWorkItem? = nil
-    var readingQueue = DispatchQueue(label: "Reading Queue")
+//    var readingQueue = DispatchQueue(label: "Reading Queue")
     var keepAliveItem: DispatchWorkItem? = nil
-    var keepAliveQueue = DispatchQueue(label: "Keep Alive Queue")
+//    var keepAliveQueue = DispatchQueue(label: "Keep Alive Queue")
     
     func start(){
         switch connect(timeout: 3) {
@@ -121,7 +121,7 @@ class TCPListener: TCPClient{
             guard let device = appDelegate.onDeviceArrival(xml: xmlIndexer["device-arrival"]["device"]) else {return}
             // subscribe to device. this makes our app appear in the Remote Devices section
             sendSubscribeMessage(deviceId: device.id)
-            
+//
         } else if (xmlIndexer["device-removal"].element != nil){
             if(ENABLE_LOGGING){
                 prettyPrintXML(xml: "Received:" + msg)
@@ -166,10 +166,10 @@ class TCPListener: TCPClient{
                 self.sendMessage(msg: self.keepAliveMsg)
             }
             sleep(self.KEEP_ALIVE_TIME)
-            self.keepAliveQueue.async(execute: self.keepAliveItem!)
+            DispatchQueue.global().async(execute: self.keepAliveItem!)
         }
         
-        keepAliveQueue.async(execute: keepAliveItem!)
+        DispatchQueue.global().async(execute: keepAliveItem!)
     }
     
     func pollForResponse(){
@@ -189,14 +189,14 @@ class TCPListener: TCPClient{
                         }
                     }
                 }
-                self.readingQueue.async(execute: self.readingWorkItem!)
+                DispatchQueue.global().async(execute: self.readingWorkItem!)
             }else{
                 sleep(self.SLEEP_TIME)
-                self.readingQueue.async(execute: self.readingWorkItem!)
+                DispatchQueue.global().async(execute: self.readingWorkItem!)
             }
         }
         
-        self.readingQueue.async(execute: self.readingWorkItem!)
+        DispatchQueue.global().async(execute: self.readingWorkItem!)
     }
     
     
