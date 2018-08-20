@@ -16,7 +16,7 @@ class TCPListener: TCPClient{
     
     let RECONNECT_TIME:UInt32 = 3
     let KEEP_ALIVE_TIME:UInt32 = 3
-    let SLEEP_TIME:UInt32 = 1
+    let SLEEP_TIME:UInt32 = 3
     
     // You can put whatever hostname and client-key you prefer.
     // But keep the same client-key, becasue if you change that, you will have to
