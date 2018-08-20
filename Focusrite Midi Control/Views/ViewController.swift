@@ -19,7 +19,8 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
     @IBOutlet weak var deviceNameLabel: NSTextField!
     @IBOutlet weak var mixTableView: NSTableView!
     @IBOutlet weak var outputsTableView: NSTableView!
-    @IBOutlet weak var outputsView: NSOutlineView!
+    @IBOutlet weak var creditsLabel: NSTextField!
+    @IBOutlet weak var versionLabel: NSTextField!
     var appDelegate:AppDelegate = NSApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
@@ -27,6 +28,8 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         self.view.wantsLayer = true
         
         appDelegate.viewController = self
+        let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        versionLabel.stringValue = "version: " + appVersion
     }
     
     override func awakeFromNib() {
@@ -39,7 +42,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         self.view.window?.delegate = self
     }
     
-    func windowShouldClose(_ sender: Any) {
+    private func windowShouldClose(_ sender: Any) {
         NSApplication.shared.terminate(self)
     }
     
