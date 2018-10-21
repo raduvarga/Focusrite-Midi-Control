@@ -1,6 +1,7 @@
 # Focusrite Midi Control
 
 APP DOWNLOAD LINK (Mac OSX): https://github.com/vargaradu/Focusrite-Midi-Control/raw/master/Focusrite%20Midi%20Control.zip
+Similar App for Universal Audio interfaces: https://github.com/vargaradu/UA-Midi-Control
 
 On Chrome you might receive a "Focusrite Midi Control.zip is not commonly downloaded and may be dangerous" warning, you have to click "Keep" to continue the donwload.
 
@@ -33,10 +34,6 @@ Create an issue with your specific problem, and I'll see what I can sort out.
 I've only coded an app for OSX because it was faster to achieve, but the hard part of cracking the code behind the code is done, so if you're a developer check the code/examples/resources in this project to make your own app for Windows, Android, whatever.
 
 ## Ok, so how did you do it?
-
-Magic.
-
-## C'mon, for real now
 
 I reverse-engineered Focusrite's messaging protocols.
 Used Wireshark to capture TCP packets: https://www.wireshark.org/

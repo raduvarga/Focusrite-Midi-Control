@@ -16,7 +16,7 @@ class TCPListener: TCPClient{
     
     let RECONNECT_TIME:UInt32 = 3
     let KEEP_ALIVE_TIME:UInt32 = 3
-    let SLEEP_TIME:UInt32 = 3
+    let SLEEP_TIME:UInt32 = 10000
     
     // You can put whatever hostname and client-key you prefer.
     // But keep the same client-key, becasue if you change that, you will have to
@@ -175,7 +175,7 @@ class TCPListener: TCPClient{
     func pollForResponse(){
         self.readingWorkItem = DispatchWorkItem {
             if(self.connected){
-                let lengthMsg:String = self.readMessage(size: self.lengthSize);
+                var lengthMsg:String = self.readMessage(size: self.lengthSize);
                 
                 if (lengthMsg == ""){
                     sleep(self.SLEEP_TIME)
@@ -189,9 +189,6 @@ class TCPListener: TCPClient{
                         }
                     }
                 }
-                DispatchQueue.global().async(execute: self.readingWorkItem!)
-            }else{
-                sleep(self.SLEEP_TIME)
                 DispatchQueue.global().async(execute: self.readingWorkItem!)
             }
         }

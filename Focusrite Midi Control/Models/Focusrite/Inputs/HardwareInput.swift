@@ -27,8 +27,7 @@ class HardwareInput: Item {
     override init(xml: XMLIndexer, parentDevice: Device){
         super.init(xml: xml, parentDevice: parentDevice)
         available = ValueItem(xml: xml["available"], parentDevice: parentDevice)
-        meter =  ValueItem(xml: xml["meter"], parentDevice: parentDevice)
-        nickname =  ValueItem(xml: xml["nickname"], parentDevice: parentDevice)
+         nickname =  ValueItem(xml: xml["nickname"], parentDevice: parentDevice)
         
         name = xml.element?.value(ofAttribute: "name")
         stereoName = xml.element?.value(ofAttribute: "stereo-name")

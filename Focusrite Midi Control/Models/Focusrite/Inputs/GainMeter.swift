@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@objc (CombinedInputs)
+@objc (GainMeter)
 class GainMeter: NSObject {
     
     @objc var gain: MidiMappableItem = MidiMappableItem()

@@ -25,7 +25,7 @@ class Device: NSObject {
     // are
     @objc var items: [String : Item] = [:]
     // list of midi mappings
-    @objc var midiMaps: [String : String] = [:]
+    @objc var midiMaps: [String : [String]] = [:]
     
     init(xml: XMLIndexer){
         super.init()
@@ -95,16 +95,18 @@ class Device: NSObject {
     func recreateMidiMaps(){
         let midiMapsPreferences = UserDefaults.standard.dictionary(forKey: "midiMaps")
         if (midiMapsPreferences != nil){
-            midiMaps = midiMapsPreferences as! [String : String]
+            midiMaps = midiMapsPreferences as! [String : [String]]
             
             for midiMap in midiMaps {
                 let midiStr:String = midiMap.key
-                let id:String = midiMap.value
+                let ids:[String] = midiMap.value
                 
-                let item:Item? = items[id]
-                if (item != nil && item is MidiMappableItem){
-                    let midiItem: MidiMappableItem = item as! MidiMappableItem
-                    midiItem.midiMapMessage = MidiMessage(midiStr: midiStr)
+                for id in ids{
+                    let item:Item? = items[id]
+                    if (item != nil && item is MidiMappableItem){
+                        let midiItem: MidiMappableItem = item as! MidiMappableItem
+                        midiItem.midiMapMessage = MidiMessage(midiStr: midiStr)
+                    }
                 }
             }
         }
@@ -120,33 +122,39 @@ class Device: NSObject {
                 changedItems.append(item!)
                 let value = (xmlItem.element?.attribute(by: "value")?.text)!
                 item?.setValue(value: value)
+            }else{
             }
         }
         
         return changedItems
     }
     
-    func setMidiMap(id: String, midiMessage: MidiMessage){
-        let item:Item? = items[id]
-        if(item != nil && item is MidiMappableItem){
+    func setMidiMap(ids: [String], midiMessage: MidiMessage){
+        
+//        if(item != nil && item is MidiMappableItem){
             // remove old midi mapping
             let midiStr = midiMessage.asStr
             removeMidiMap(midiStr: midiStr)
-            
-            let midiItem: MidiMappableItem = (item as! MidiMappableItem)
-            midiItem.midiMapMessage.copy(midiMessage: midiMessage)
-            midiMaps[midiMessage.asStr] = midiItem.id
-            
+        
+            midiMaps[midiMessage.asStr] = ids
             UserDefaults.standard.set(midiMaps, forKey: "midiMaps")
-        }
+            
+            for id in ids{
+                let item:Item? = items[id]
+                let midiItem: MidiMappableItem = (item as! MidiMappableItem)
+                midiItem.midiMapMessage.copy(midiMessage: midiMessage)
+            }
+//        }
     }
     
     func removeMidiMap(midiStr: String){
-        let oldMappingId = midiMaps[midiStr]
-        if(oldMappingId != nil){
-            let oldMappingItem: Item? = items[oldMappingId!]
-            (oldMappingItem as! MidiMappableItem).midiMapMessage.clear()
-            midiMaps.removeValue(forKey: midiStr)
+        let oldMappingIds:[String]? = midiMaps[midiStr]
+        if(oldMappingIds != nil){
+            for oldMappingId in oldMappingIds!{
+                let oldMappingItem: Item? = items[oldMappingId]
+                (oldMappingItem as! MidiMappableItem).midiMapMessage.clear()
+                midiMaps.removeValue(forKey: midiStr)
+            }
         }
     }
     
@@ -156,11 +164,15 @@ class Device: NSObject {
         }
     }
     
-    func findItem(midiMessage: MidiMessage) -> Item?{
-        let id:String? = midiMaps[midiMessage.asStr]
-        if (id != nil){
-            return items[id!]
+    func findItems(midiMessage: MidiMessage) -> [Item]?{
+        let ids:[String]? = midiMaps[midiMessage.asStr]
+        var result: [Item] = []
+        
+        if (ids != nil){
+            for id in ids!{
+                result.append(items[id]!)
+            }
         }
-        return nil
+        return result
     }
 }

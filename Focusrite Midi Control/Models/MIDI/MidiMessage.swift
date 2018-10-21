@@ -64,6 +64,10 @@ class MidiMessage: NSObject {
         self.value = midiMessage.value
         self.printStr = midiMessage.printStr
     }
+    
+    func copy() -> MidiMessage{
+        return MidiMessage(type: type, nr: nr, value: value)
+    }
 
     func isCcMessage() -> Bool{
         return (type >= CC) && (type <= CCMax)

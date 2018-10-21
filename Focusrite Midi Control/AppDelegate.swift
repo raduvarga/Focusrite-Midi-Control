@@ -27,6 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // various vars
     var isMidiMapping:Bool = false
     var selectedMidiMapId = ""
+    var selectedMidiMapIndex = -1
     var selectedDevice: Device?
     var selectedMix: Mix?
     var selectedHardwareOutput: HardwareOutput?
@@ -48,15 +49,50 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
     
+    func getStereoMixes() -> [Mix] {
+        let stereoOutputs = getStereoHardwareOutputs()
+        var stereoMixes: [Mix] = []
+        for stereoOutput in stereoOutputs{
+            let mix:Mix? = stereoOutput.source.object
+            stereoMixes.append(mix!)
+        }
+        return stereoMixes
+    }
+    
+    func getStereoHardwareOutputs() -> [HardwareOutput] {
+        let stereoOutputs = appDelegate.selectedDevice?.getStereoOutputs()
+        if (stereoOutputs != nil){
+            return stereoOutputs!
+        }
+        return []
+    }
+    
     func onMidiMessageReceived (midiMessage: MidiMessage){
         if(selectedDevice != nil){
             if(isMidiMapping){
-                selectedDevice?.setMidiMap(id: selectedMidiMapId, midiMessage: midiMessage)
-                viewController?.setMidiMapping(midiMapId: selectedMidiMapId, midiMessage: midiMessage);
+                if (selectedDevice?.mixes != nil){
+                    var ids: [String] = []
+                    let midiMapAllMixes:Bool = UserDefaults.standard.bool(forKey: "midiMapAllMixes")
+                   
+                    if(midiMapAllMixes){
+                        for mix in getStereoMixes(){
+                            let availableGains = mix.getAvailableGains(selectedHarwareOutput: selectedHardwareOutput)
+                            ids.append(availableGains[selectedMidiMapIndex].gain.id)
+                        }
+                    }else{
+                        let availableGains = getSelectedMix()?.getAvailableGains(selectedHarwareOutput: selectedHardwareOutput)
+                        ids.append(availableGains![selectedMidiMapIndex].gain.id)
+                    }
+                    selectedDevice?.setMidiMap(ids: ids, midiMessage: midiMessage)
+                }
+                
+                viewController?.setMidiMapping();
             }else{
-                let midiItem: Item? = selectedDevice?.findItem(midiMessage: midiMessage)
-                if(midiItem != nil){
-                    tcpClient?.sendVolMessage(item: midiItem!, volume: midiMessage.value)
+                let midiItems: [Item]? = selectedDevice?.findItems(midiMessage: midiMessage)
+                if(midiItems != nil){
+                    for midiItem in midiItems! {
+                        tcpClient?.sendVolMessage(item: midiItem, volume: midiMessage.value)
+                    }
                 }
             }
         }

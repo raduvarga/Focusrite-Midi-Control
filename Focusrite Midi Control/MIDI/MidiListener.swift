@@ -12,13 +12,18 @@ import CoreMIDI
 let ENABLE_LOGGING = false
 
 let appDelegate:AppDelegate  = NSApplication.shared.delegate as! AppDelegate
+
 let CC:Int = 176
 let CCMax:Int = 176 + 11
 let Note:Int = 144
 let NoteMax:Int = 144 + 11
 
+let SLEEP_TIME:UInt32 = 150000
+
 var client:MIDIClientRef = MIDIClientRef()
 var inPort:MIDIPortRef = MIDIPortRef()
+
+var messageCache:[String : MidiMessage] = [:]
 
 // read incoming MIDI
 func MyMIDIReadProc(pktList: UnsafePointer<MIDIPacketList>,
@@ -38,8 +43,16 @@ func MyMIDIReadProc(pktList: UnsafePointer<MIDIPacketList>,
     let midiMessage = MidiMessage(type: first, nr: second, value: third)
     
     if midiMessage.isCcMessage() {
-        appDelegate.onMidiMessageReceived(midiMessage: midiMessage)
+        newMidiMessageReceived(midiMessage: midiMessage);
     }
+}
+
+func newMidiMessageReceived(midiMessage: MidiMessage){
+    let writeNewMidiMessage: DispatchWorkItem = DispatchWorkItem {
+         messageCache[midiMessage.asStr] = midiMessage
+    }
+    
+    DispatchQueue.global().sync(execute: writeNewMidiMessage)
 }
 
 // detect when MIDI instruments connect/disconnect
@@ -68,6 +81,8 @@ func connectMidiSources (){
 
 class MidiListener: NSObject {
     
+    var readingWorkItem: DispatchWorkItem?
+    
     override init() {
         super.init()
     }
@@ -77,7 +92,26 @@ class MidiListener: NSObject {
         MIDIInputPortCreate(client, "Input port" as CFString, MyMIDIReadProc, nil, &inPort)
         
         connectMidiSources();
+        processMidiMessages();
         
         print ("Connected to MIDI")
+    }
+    
+    func processMidiMessages(){
+        readingWorkItem = DispatchWorkItem {
+            if(messageCache.count > 0){
+                for (midiStr, midiMessage) in messageCache {
+                    if(ENABLE_LOGGING){
+                        print("processMidiMessage:", midiStr, midiMessage.value)
+                    }
+                    appDelegate.onMidiMessageReceived(midiMessage: midiMessage)
+                    messageCache.removeValue(forKey: midiStr)
+                }
+            }
+            usleep(SLEEP_TIME)
+            DispatchQueue.global().async(execute: self.readingWorkItem!)
+        }
+        
+        DispatchQueue.global().async(execute: readingWorkItem!)
     }
 }

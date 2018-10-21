@@ -54,14 +54,6 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         return []
     }
     
-    func getStereoHardwareOutputs() -> [HardwareOutput] {
-        let stereoOutputs = appDelegate.selectedDevice?.getStereoOutputs()
-        if (stereoOutputs != nil){
-            return stereoOutputs!
-        }
-        return []
-    }
-    
     override var representedObject: Any? {
         didSet {
             // Update the view, if already loaded.
@@ -95,7 +87,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         }
     }
     
-    func setMidiMapping(midiMapId: String, midiMessage: MidiMessage){
+    func setMidiMapping(){
         DispatchQueue.main.async{
             if(self.mixTableView.selectedRow != -1){
                 let nrRows: Int = self.mixTableView.numberOfRows - 1
@@ -143,11 +135,6 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
             if (self.outputsTableView.numberOfRows == 0){
                 self.outputsTableView.reloadData()
             }else {
-                let nrRows: Int = self.outputsTableView.numberOfRows - 1
-                if (nrRows > 0){
-                    let rows: IndexSet =  IndexSet(0...nrRows)
-                    self.outputsTableView.reloadData(forRowIndexes: rows, columnIndexes: [0])
-                }
             }
         }
     }
@@ -157,12 +144,12 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         if(tableView == mixTableView){
             if (appDelegate.isMidiMapping && mixTableView.selectedRow > -1){
                 let gainMeter = getAvailableGains()[mixTableView.selectedRow]
+                appDelegate.selectedMidiMapIndex = mixTableView.selectedRow
                 appDelegate.selectedMidiMapId = gainMeter.gain.id
-                print("selectedMidiMapId", gainMeter.gain.id)
             }
         }else {
             if (outputsTableView.selectedRow > -1){
-                appDelegate.selectedHardwareOutput = getStereoHardwareOutputs()[outputsTableView.selectedRow]
+                appDelegate.selectedHardwareOutput = appDelegate.getStereoHardwareOutputs()[outputsTableView.selectedRow]
                 mixLabel.stringValue = "Mix (" + (appDelegate.selectedHardwareOutput?.nickname.value)! + ")"
                 
                 mixTableView.reloadData()
@@ -175,7 +162,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         if(tableView == mixTableView){
             count = getAvailableGains().count
         }else{
-            count = getStereoHardwareOutputs().count
+            count = appDelegate.getStereoHardwareOutputs().count
         }
         return count
     }
@@ -192,7 +179,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
                 outputsTableView.selectRowIndexes([0], byExtendingSelection: false)
             }
             
-            let hardwareOutputs = getStereoHardwareOutputs()
+            let hardwareOutputs = appDelegate.getStereoHardwareOutputs()
             var hardwareOutput: HardwareOutput?
                 
             if (hardwareOutputs.count > row){
