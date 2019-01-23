@@ -46,6 +46,10 @@ class SpdifInput: HardwareInput {
 class AdatInput: HardwareInput {
 }
 
+@objc (DanteInput)
+class DanteInput: HardwareInput {
+}
+
 @objc (PlaybackInput)
 class PlaybackInput: HardwareInput {
 }

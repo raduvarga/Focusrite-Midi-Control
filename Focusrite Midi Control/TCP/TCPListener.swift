@@ -109,6 +109,25 @@ class TCPListener: TCPClient{
         sendMessage(msg: subscribeMsg)
     }
     
+    func writeToFile(file: String, text: String) {
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            
+            let fileURL = dir.appendingPathComponent(file)
+            
+            //writing
+            do {
+                try text.write(to: fileURL, atomically: false, encoding: .utf8)
+            }
+            catch {/* error handling here */}
+            
+            //reading
+            do {
+                let text2 = try String(contentsOf: fileURL, encoding: .utf8)
+            }
+            catch {/* error handling here */}
+        }
+    }
+    
     func handleMessage(msg:String){
         let xmlIndexer:XMLIndexer = SWXMLHash.parse(msg)
         
@@ -117,6 +136,7 @@ class TCPListener: TCPClient{
         } else if (xmlIndexer["device-arrival"].element != nil){
             if(ENABLE_LOGGING){
                 prettyPrintXML(xml: "Received:" + msg)
+//                writeToFile(file: "focusrite-midi-log.txt", text: msg)
             }
             guard let device = appDelegate.onDeviceArrival(xml: xmlIndexer["device-arrival"]["device"]) else {return}
             // subscribe to device. this makes our app appear in the Remote Devices section

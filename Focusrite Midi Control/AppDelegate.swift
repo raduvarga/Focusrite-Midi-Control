@@ -76,12 +76,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                    
                     if(midiMapAllMixes){
                         for mix in getStereoMixes(){
-                            let availableGains = mix.getAvailableGains(selectedHarwareOutput: selectedHardwareOutput)
-                            ids.append(availableGains[selectedMidiMapIndex].gain.id)
+                            let availableGains:Array<GainMeter> = mix.getAvailableGains(selectedHarwareOutput: selectedHardwareOutput)
+                            
+                            if(availableGains.indices.contains(selectedMidiMapIndex)){
+                                ids.append(availableGains[selectedMidiMapIndex].gain.id)
+                            }
                         }
                     }else{
-                        let availableGains = getSelectedMix()?.getAvailableGains(selectedHarwareOutput: selectedHardwareOutput)
-                        ids.append(availableGains![selectedMidiMapIndex].gain.id)
+                        guard let mix:Mix = getSelectedMix() else {return}
+                        
+                        let availableGains:Array<GainMeter> = mix.getAvailableGains(selectedHarwareOutput: selectedHardwareOutput)
+                        
+                        if(availableGains.indices.contains(selectedMidiMapIndex)){
+                            ids.append(availableGains[selectedMidiMapIndex].gain.id)
+                        }
                     }
                     selectedDevice?.setMidiMap(ids: ids, midiMessage: midiMessage)
                 }

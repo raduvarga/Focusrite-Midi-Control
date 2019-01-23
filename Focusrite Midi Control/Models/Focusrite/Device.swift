@@ -53,6 +53,10 @@ class Device: NSObject {
             let input: AdatInput = AdatInput(xml: xmlItem, parentDevice: self)
             hardwareInputs.append(input)
         }
+        xml["dante"].all.map { xmlItem in
+            let input: DanteInput = DanteInput(xml: xmlItem, parentDevice: self)
+            hardwareInputs.append(input)
+        }
         xml["playback"].all.map { xmlItem in
             let input: PlaybackInput = PlaybackInput(xml: xmlItem, parentDevice: self)
             hardwareInputs.append(input)
