@@ -150,7 +150,7 @@ class ViewController: NSViewController, NSTableViewDataSource, NSTableViewDelega
         }else {
             if (outputsTableView.selectedRow > -1){
                 appDelegate.selectedHardwareOutput = appDelegate.getStereoHardwareOutputs()[outputsTableView.selectedRow]
-                mixLabel.stringValue = "Mix (" + (appDelegate.selectedHardwareOutput?.nickname.value)! + ")"
+                mixLabel.stringValue = (appDelegate.selectedHardwareOutput?.name)!
                 
                 mixTableView.reloadData()
             }

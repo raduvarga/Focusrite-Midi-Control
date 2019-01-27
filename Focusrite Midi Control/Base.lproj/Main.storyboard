@@ -951,7 +951,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="iMB-4z-fgb">
-                                                            <rect key="frame" x="185.5" y="1" width="94" height="17"/>
+                                                            <rect key="frame" x="186" y="1" width="94" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ilT-rF-Ubd">
@@ -987,7 +987,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="s4T-aQ-LF8">
-                                                            <rect key="frame" x="282.5" y="1" width="98" height="17"/>
+                                                            <rect key="frame" x="283" y="1" width="98" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6NP-k3-CKM">
@@ -1088,7 +1088,7 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="hj2-33-HRc" name="value" keyPath="objectValue.nickname.value" id="AU3-0m-56C"/>
+                                                                        <binding destination="hj2-33-HRc" name="value" keyPath="objectValue.name" id="idX-oP-fo6"/>
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
@@ -1129,7 +1129,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b28-K3-8nc">
-                                <rect key="frame" x="303" y="329" width="113" height="17"/>
+                                <rect key="frame" x="292" y="329" width="210" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Mix" id="9IH-LD-kYD">
                                     <font key="font" metaFont="system"/>
