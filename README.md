@@ -52,6 +52,10 @@ A breakdown of how it's done:
   - Then you should receive device/value updates which will be reflected in the UI
   - You will send value updates when you have the appropriate midi events comming in
 
+## How to build
+
+To build this project, you must open the ".xcworkspace" file in XCode and run it.
+
 ## Appendix
 
 This is my first time I've written an OSX app, so don't judge the code too hard.
