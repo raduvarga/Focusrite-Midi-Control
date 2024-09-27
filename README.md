@@ -1,6 +1,6 @@
 # Focusrite Midi Control
 
-NEW APP DOWNLOAD LINK (Mac & WIndows): https://www.raduvarga.com/software/focusrite-midi-control
+NEW APP DOWNLOAD LINK (Mac & WIndows): https://fonoflow.com/products/focusrite-midi-control
 
 Old App Download Link (Mac OSX): https://github.com/vargaradu/Focusrite-Midi-Control/raw/master/Focusrite%20Midi%20Control.zip
 
