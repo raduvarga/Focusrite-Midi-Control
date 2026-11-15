@@ -2,8 +2,6 @@
 
 NEW APP DOWNLOAD LINK (Mac & WIndows): https://fonoflow.com/products/focusrite-midi-control
 
-Old App Download Link (Mac OSX): https://github.com/vargaradu/Focusrite-Midi-Control/raw/master/Focusrite%20Midi%20Control.zip
-
 Similar App for Universal Audio interfaces: https://github.com/vargaradu/UA-Midi-Control
 
 On Chrome you might receive a "Focusrite Midi Control.zip is not commonly downloaded and may be dangerous" warning, you have to click "Keep" to continue the donwload.
